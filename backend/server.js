@@ -25,6 +25,15 @@ const client = new MongoClient(uri, {
 // Middleware para parsear bodies JSON
 app.use(bodyParser.json());
 
+// Mantiene la conexión abierta y reutilizable
+client.connect()
+  .then(() => {
+    console.log('Conectado a la base de datos MongoDB Atlas');
+  })
+  .catch(err => {
+    console.error('Error al conectar a MongoDB Atlas:', err);
+  });
+
 // Ruta de prueba para verificar la conexión al servidor
 app.get('/', (req, res) => {
   res.send('¡Hola! Esta es la respuesta desde el servidor.');
@@ -33,9 +42,6 @@ app.get('/', (req, res) => {
 // Ruta para guardar datos de registro de usuarios
 app.post('/api/registrarUsuario', async (req, res) => {
   try {
-    // Conecta el cliente al servidor MongoDB Atlas
-    await client.connect();
-
     const database = client.db(dbName);
     const collection = database.collection('usuarios');
 
@@ -49,14 +55,11 @@ app.post('/api/registrarUsuario', async (req, res) => {
       contraseña: contraseña
     });
 
-    console.log("Usuario registrado:", result.ops[0]);
-    res.status(200).json({ message: 'Registro exitoso', data: result.ops[0] });
+    console.log("Usuario registrado:", result.insertedId);
+    res.status(200).json({ message: 'Registro exitoso', data: { id: result.insertedId, nombre, email } });
   } catch (error) {
     console.error('Error al registrar usuario:', error);
     res.status(500).json({ message: 'Error interno del servidor' });
-  } finally {
-    // Asegura que el cliente se cierre correctamente al finalizar o en caso de error
-    await client.close();
   }
 });
 

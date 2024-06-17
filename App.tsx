@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
+import { View, Text, Button, TextInput, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
 
 const App = () => {
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [contraseña, setContraseña] = useState('');
-  const [mensaje, setMensaje] = useState('');
 
   const handleRegistro = async () => {
     try {
@@ -17,20 +16,11 @@ const App = () => {
       });
 
       console.log('Respuesta del servidor:', response.data);
+      Alert.alert('Usuario registrado correctamente'); // Mensaje de éxito
 
-      // Verificar si la respuesta es exitosa
-      if (response.data.message === 'Registro exitoso') {
-        setMensaje('Usuario registrado correctamente');
-        // Limpiar los campos después del registro exitoso
-        setNombre('');
-        setEmail('');
-        setContraseña('');
-      } else {
-        setMensaje('Error al registrar usuario');
-      }
     } catch (error) {
       console.error('Error al registrar usuario:', error);
-      setMensaje('Error al registrar usuario');
+      Alert.alert('Error al intentar registrar el usuario'); // Mensaje de error
     }
   };
 
@@ -57,7 +47,6 @@ const App = () => {
         onChangeText={text => setContraseña(text)}
       />
       <Button title="Registrar" onPress={handleRegistro} />
-      <Text style={styles.mensaje}>{mensaje}</Text>
     </View>
   );
 };
@@ -76,10 +65,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
-  },
-  mensaje: {
-    marginTop: 10,
-    color: 'green',
   },
 });
 

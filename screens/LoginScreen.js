@@ -7,7 +7,7 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = () => {
     console.log('Intento de inicio de sesión');
-    if (username === 'example@correo.com' && password === 'password123') {
+    if (username === '' && password === '') {
       console.log('Inicio de sesión exitoso');
       navigation.navigate('Home'); // Asegúrate de tener una pantalla 'Home' definida en tu navegación
     } else {
