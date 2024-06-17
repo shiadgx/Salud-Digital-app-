@@ -1,30 +1,32 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import axios from 'axios';
 
-const RegisterScreen = ({ navigation }) => {
+const RegisterScreen = () => {
   const [nombre, setNombre] = useState('');
-  const [apellidos, setApellidos] = useState('');
-  const [correo, setCorreo] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [contraseña, setContraseña] = useState('');
 
-  const handleRegister = () => {
-    // Aquí iría la lógica para enviar los datos de registro (puedes usar una API, AsyncStorage, etc.)
-    console.log('Nombre:', nombre);
-    console.log('Apellidos:', apellidos);
-    console.log('Correo:', correo);
-    console.log('Contraseña:', password);
-    console.log('Confirmar Contraseña:', confirmPassword);
+  const handleRegistro = async () => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/registrarUsuario', {
+        nombre: nombre,
+        email: email,
+        contraseña: contraseña
+      });
 
-    // Ejemplo simple: navegación de regreso a la pantalla de inicio de sesión después del registro
-    // Puedes agregar tu lógica aquí para manejar el registro de manera adecuada
-    // Esto es solo un ejemplo básico para la navegación
-    // navigation.navigate('Login');
+      console.log('Respuesta del servidor:', response.data);
+      Alert.alert('Registro exitoso', 'Usuario registrado correctamente');
+      // Puedes redirigir a otra pantalla aquí si lo deseas
+    } catch (error) {
+      console.error('Error al registrar usuario:', error);
+      Alert.alert('Error', 'Hubo un problema al registrar el usuario');
+    }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Registro</Text>
+      <Text style={styles.title}>Registro de Usuario</Text>
       <TextInput
         style={styles.input}
         placeholder="Nombre"
@@ -33,34 +35,18 @@ const RegisterScreen = ({ navigation }) => {
       />
       <TextInput
         style={styles.input}
-        placeholder="Apellidos"
-        value={apellidos}
-        onChangeText={setApellidos}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Correo"
-        value={correo}
-        onChangeText={setCorreo}
-        keyboardType="email-address"
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
         placeholder="Contraseña"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
+        secureTextEntry={true}
+        value={contraseña}
+        onChangeText={setContraseña}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirmar Contraseña"
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        secureTextEntry
-      />
-      <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Registrarse</Text>
-      </TouchableOpacity>
+      <Button title="Registrar" onPress={handleRegistro} />
     </View>
   );
 };
@@ -70,31 +56,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#3498db',
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
     marginBottom: 20,
   },
   input: {
-    width: '80%',
-    padding: 10,
-    backgroundColor: 'white',
+    width: '100%',
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
     marginBottom: 10,
-    borderRadius: 5,
-  },
-  registerButton: {
-    backgroundColor: '#2980b9',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    marginTop: 20,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
+    paddingHorizontal: 10,
   },
 });
 

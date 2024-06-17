@@ -1,22 +1,86 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from './screens/LoginScreen';
-import RegisterScreen from './screens/RegisterScreen';
-import Home from './screens/Home';
-
-const Stack = createStackNavigator();
+import React, { useState } from 'react';
+import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
+import axios from 'axios';
 
 const App = () => {
+  const [nombre, setNombre] = useState('');
+  const [email, setEmail] = useState('');
+  const [contraseña, setContraseña] = useState('');
+  const [mensaje, setMensaje] = useState('');
+
+  const handleRegistro = async () => {
+    try {
+      const response = await axios.post('http://192.168.100.2:3000/api/registrarUsuario', {
+        nombre: nombre,
+        email: email,
+        contraseña: contraseña
+      });
+
+      console.log('Respuesta del servidor:', response.data);
+
+      // Verificar si la respuesta es exitosa
+      if (response.data.message === 'Registro exitoso') {
+        setMensaje('Usuario registrado correctamente');
+        // Limpiar los campos después del registro exitoso
+        setNombre('');
+        setEmail('');
+        setContraseña('');
+      } else {
+        setMensaje('Error al registrar usuario');
+      }
+    } catch (error) {
+      console.error('Error al registrar usuario:', error);
+      setMensaje('Error al registrar usuario');
+    }
+  };
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Home" component={Home} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={styles.container}>
+      <Text>Registro de Usuario</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Nombre"
+        value={nombre}
+        onChangeText={text => setNombre(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={text => setEmail(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Contraseña"
+        secureTextEntry={true}
+        value={contraseña}
+        onChangeText={text => setContraseña(text)}
+      />
+      <Button title="Registrar" onPress={handleRegistro} />
+      <Text style={styles.mensaje}>{mensaje}</Text>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  input: {
+    height: 40,
+    width: '100%',
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+  mensaje: {
+    marginTop: 10,
+    color: 'green',
+  },
+});
 
 export default App;

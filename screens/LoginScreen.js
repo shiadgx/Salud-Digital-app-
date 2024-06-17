@@ -30,6 +30,7 @@ const LoginScreen = ({ navigation }) => {
           value={username}
           onChangeText={setUsername}
           autoCapitalize="none"
+          placeholderTextColor="#aaa"
         />
         <TextInput
           style={styles.input}
@@ -37,6 +38,7 @@ const LoginScreen = ({ navigation }) => {
           value={password}
           onChangeText={setPassword}
           secureTextEntry={true}
+          placeholderTextColor="#aaa"
         />
       </View>
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
@@ -54,45 +56,48 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'linear-gradient(to right, rgb(0, 255, 255), #3498db)',
+    backgroundColor: '#3498db',
+    paddingHorizontal: 20,
   },
   title: {
-    fontFamily: 'Pacifico',
-    fontSize: 20,
+    fontSize: 24,
     color: 'white',
-    marginBottom: 20,
+    marginBottom: 40,
+    fontWeight: 'bold',
   },
   inputContainer: {
-    width: '80%',
-    marginBottom: 20,
+    width: '100%',
+    marginBottom: 30,
   },
   input: {
     width: '100%',
-    padding: 10,
-    marginBottom: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 20,
+    padding: 15,
+    marginBottom: 15,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderRadius: 25,
     color: 'white',
-    fontSize: 14,
+    fontSize: 16,
   },
   loginButton: {
     backgroundColor: '#2980b9',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    marginBottom: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    borderRadius: 25,
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 15,
   },
   buttonText: {
     color: 'white',
-    fontSize: 14,
-    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   registerLink: {
-    marginTop: 10,
+    marginTop: 20,
   },
   registerLinkText: {
     color: 'white',
-    fontSize: 14,
+    fontSize: 16,
     textDecorationLine: 'underline',
   },
 });

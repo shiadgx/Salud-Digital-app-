@@ -1,0 +1,13 @@
+{
+  "name": "mi-backend",
+  "version": "1.0.0",
+  "description": "Backend de mi aplicación con Node.js y MongoDB Atlas",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.2",
+    "mongodb": "^4.4.8"
+  }
+}
