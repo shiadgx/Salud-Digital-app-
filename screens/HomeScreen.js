@@ -8,8 +8,8 @@ const HomeScreen = ({ navigation }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleLinkPress = (url) => {
-    navigation.navigate(url); // Navega a la pantalla especificada
+  const handleLinkPress = (screenName) => {
+    navigation.navigate(screenName); // Navega a la pantalla especificada
   };
 
   return (
@@ -23,13 +23,10 @@ const HomeScreen = ({ navigation }) => {
 
       {isMenuOpen && (
         <View style={styles.menu}>
-          <TouchableOpacity style={styles.menuItem} onPress={() => handleLinkPress('Profile')}>
-            <Text style={styles.menuItemText}>Perfil</Text>
-          </TouchableOpacity>
           <TouchableOpacity style={styles.menuItem} onPress={() => handleLinkPress('Settings')}>
             <Text style={styles.menuItemText}>Ajustes</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => handleLinkPress('Logout')}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => handleLinkPress('Login')}>
             <Text style={styles.menuItemText}>Cerrar Sesión</Text>
           </TouchableOpacity>
         </View>

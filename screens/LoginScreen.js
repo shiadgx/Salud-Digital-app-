@@ -1,23 +1,45 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import axios from 'axios';
 
 const LoginScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [contraseña, setContraseña] = useState('');
 
-  const handleLogin = () => {
-    console.log('Intento de inicio de sesión');
-    if (username === '' && password === '') {
-      console.log('Inicio de sesión exitoso');
-      navigation.navigate('Home'); // Asegúrate de tener una pantalla 'Home' definida en tu navegación
-    } else {
-      console.log('Credenciales incorrectas');
-      Alert.alert('Error', 'Correo o contraseña incorrectos', [{ text: 'OK' }]);
+  const handleLogin = async () => {
+    try {
+      // Validar que se haya ingresado el correo y la contraseña
+      if (!correo || !contraseña) {
+        Alert.alert('Error', 'Por favor ingresa correo y contraseña');
+        return;
+      }
+
+      const response = await axios.post('http://192.168.100.2:3000/api/iniciarSesion', {
+        correo,
+        contraseña
+      });
+
+      console.log('Respuesta del servidor:', response.data);
+      
+      // Validar la respuesta del servidor
+      if (response.status === 200) {
+        // Inicio de sesión exitoso
+        console.log('Inicio de sesión exitoso');
+        navigation.navigate('Home'); // Redirige a la pantalla de inicio (Home)
+      } else {
+        // Error en inicio de sesión
+        console.log('Error en inicio de sesión');
+        Alert.alert('Error', 'Hubo un problema al iniciar sesión', [{ text: 'OK' }]);
+      }
+
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+      Alert.alert('Error', 'Hubo un problema al iniciar sesión');
     }
   };
 
   const handleRegisterPress = () => {
-    navigation.navigate('Register'); // Asegúrate de tener una pantalla 'Register' definida en tu navegación
+    navigation.navigate('Register'); // Redirige a la pantalla de registro (Register)
   };
 
   return (
@@ -27,16 +49,16 @@ const LoginScreen = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="Correo"
-          value={username}
-          onChangeText={setUsername}
+          value={correo}
+          onChangeText={setCorreo}
           autoCapitalize="none"
           placeholderTextColor="#aaa"
         />
         <TextInput
           style={styles.input}
           placeholder="Contraseña"
-          value={password}
-          onChangeText={setPassword}
+          value={contraseña}
+          onChangeText={setContraseña}
           secureTextEntry={true}
           placeholderTextColor="#aaa"
         />

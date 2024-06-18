@@ -1,71 +1,33 @@
-import React, { useState } from 'react';
-import { View, Text, Button, TextInput, StyleSheet, Alert } from 'react-native';
-import axios from 'axios';
+// App.js
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import HomeScreen from './screens/HomeScreen';
+import SettingsScreen from './screens/SettingsScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import AppointmentsScreen from './screens/AppointmentsScreen';
+import MedicinesScreen from './screens/MedicinesScreen.js';
+import MedicalRecordsScreen from './screens/MedicalRecordsScreen.js';
+
+const Stack = createStackNavigator();
 
 const App = () => {
-  const [nombre, setNombre] = useState('');
-  const [email, setEmail] = useState('');
-  const [contraseña, setContraseña] = useState('');
-
-  const handleRegistro = async () => {
-    try {
-      const response = await axios.post('http://192.168.100.2:3000/api/registrarUsuario', {
-        nombre: nombre,
-        email: email,
-        contraseña: contraseña
-      });
-
-      console.log('Respuesta del servidor:', response.data);
-      Alert.alert('Usuario registrado correctamente'); // Mensaje de éxito
-
-    } catch (error) {
-      console.error('Error al registrar usuario:', error);
-      Alert.alert('Error al intentar registrar el usuario'); // Mensaje de error
-    }
-  };
-
   return (
-    <View style={styles.container}>
-      <Text>Registro de Usuario</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Nombre"
-        value={nombre}
-        onChangeText={text => setNombre(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={text => setEmail(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Contraseña"
-        secureTextEntry={true}
-        value={contraseña}
-        onChangeText={text => setContraseña(text)}
-      />
-      <Button title="Registrar" onPress={handleRegistro} />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Settings" component={SettingsScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="Appointments" component={AppointmentsScreen} />
+        <Stack.Screen name="Medicines" component={MedicinesScreen} />
+        <Stack.Screen name="MedicalRecords" component={MedicalRecordsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  input: {
-    height: 40,
-    width: '100%',
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-});
 
 export default App;

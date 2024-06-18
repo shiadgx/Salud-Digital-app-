@@ -21,9 +21,7 @@ const SettingsScreen = ({ navigation }) => {
       
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Cuenta</Text>
-        <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Profile')}>
-          <Text style={styles.optionText}>Perfil</Text>
-        </TouchableOpacity>
+      
         <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('ChangePassword')}>
           <Text style={styles.optionText}>Cambiar Contraseña</Text>
         </TouchableOpacity>
