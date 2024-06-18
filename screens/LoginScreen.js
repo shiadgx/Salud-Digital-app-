@@ -13,7 +13,7 @@ const LoginScreen = ({ navigation }) => {
     }
 
     // Validar las credenciales localmente
-    if (correo === 'example@correo.com' && contraseña === 'password') {
+    if (correo === 'example@correo.com' && contraseña === 'Password') {
       // Inicio de sesión exitoso
       console.log('Inicio de sesión exitoso');
       navigation.navigate('Home'); // Redirige a la pantalla de inicio (Home)
