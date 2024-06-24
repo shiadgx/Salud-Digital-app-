@@ -18,12 +18,7 @@ const RegisterScreen = ({ navigation }) => {
         return;
       }
 
-      // Validar que la contraseña contenga al menos un número y un caracter especial
-      const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
-      if (!regex.test(contraseña)) {
-        Alert.alert('Error', 'La contraseña debe contener al menos un número y un carácter especial (!@#$%^&*) y tener al menos 6 caracteres');
-        return;
-      }
+    
 
       const response = await axios.post('http://192.168.100.2:3000/api/registrarUsuario', {
         nombre,

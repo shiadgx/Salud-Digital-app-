@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-saluddigitalapp-dev-d207d-authRole",
+      "UnauthRoleArn": "arn:aws:iam::692926976129:role/amplify-saluddigitalapp-dev-d207d-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::692926976129:role/amplify-saluddigitalapp-dev-d207d-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-saluddigitalapp-dev-d207d-deployment",
+      "UnauthRoleName": "amplify-saluddigitalapp-dev-d207d-unauthRole",
+      "StackName": "amplify-saluddigitalapp-dev-d207d",
+      "StackId": "arn:aws:cloudformation:us-east-2:692926976129:stack/amplify-saluddigitalapp-dev-d207d/2fd8ec50-2ed2-11ef-a7fb-028803a3cbf9",
+      "AmplifyAppId": "d33eo8wtkyk2mf"
+    },
+    "categories": {
+      "auth": {
+        "saluddigitalappf7298f07": {}
+      },
+      "hosting": {
+        "S3AndCloudFront": {}
+      }
+    }
+  }
+}

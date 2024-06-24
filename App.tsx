@@ -10,8 +10,14 @@ import ProfileScreen from './screens/ProfileScreen';
 import AppointmentsScreen from './screens/AppointmentsScreen';
 import MedicinesScreen from './screens/MedicinesScreen.js';
 import MedicalRecordsScreen from './screens/MedicalRecordsScreen.js';
-
+import amplify, * as awsAmplify from 'aws-amplify';
+import { aws_amplify, aws_config } from 'aws-cdk-lib';
+import awsdonfig from './src/aws-exports.js';
+import { Amplify } from 'aws-amplify';
 const Stack = createStackNavigator();
+
+
+
 
 const App = () => {
   return (

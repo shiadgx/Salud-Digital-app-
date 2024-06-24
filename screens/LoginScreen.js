@@ -1,26 +1,40 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import axios from 'axios';
 
 const LoginScreen = ({ navigation }) => {
   const [correo, setCorreo] = useState('');
   const [contraseña, setContraseña] = useState('');
 
-  const handleLogin = () => {
-    // Validar que se haya ingresado el correo y la contraseña
-    if (!correo || !contraseña) {
-      Alert.alert('Error', 'Por favor ingresa correo y contraseña');
-      return;
-    }
+  const handleLogin = async () => {
+    try {
+      // Validar que se haya ingresado el correo y la contraseña
+      if (!correo || !contraseña) {
+        Alert.alert('Error', 'Por favor ingresa correo y contraseña');
+        return;
+      }
 
-    // Validar las credenciales localmente
-    if (correo === 'example@correo.com' && contraseña === 'Password') {
-      // Inicio de sesión exitoso
-      console.log('Inicio de sesión exitoso');
-      navigation.navigate('Home'); // Redirige a la pantalla de inicio (Home)
-    } else {
-      // Error en inicio de sesión
-      console.log('Error en inicio de sesión');
-      Alert.alert('Error', 'Correo o contraseña incorrectos', [{ text: 'OK' }]);
+      const response = await axios.post('http://192.168.100.2:3000/api/iniciarSesion', {
+        correo,
+        contraseña
+      });
+
+      console.log('Respuesta del servidor:', response.data);
+      
+      // Validar la respuesta del servidor
+      if (response.status === 200) {
+        // Inicio de sesión exitoso
+        console.log('Inicio de sesión exitoso');
+        navigation.navigate('Home'); // Redirige a la pantalla de inicio (Home)
+      } else {
+        // Error en inicio de sesión
+        console.log('Error en inicio de sesión');
+        Alert.alert('Error', 'Hubo un problema al iniciar sesión', [{ text: 'OK' }]);
+      }
+
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+      Alert.alert('Error', 'Hubo un problema al iniciar sesión');
     }
   };
 
